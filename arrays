@@ -1,5 +1,8 @@
 //Напишите функцию aclean(arr), которая возвращает массив слов, очищенный от анаграмм.
 let arr = ["воз", "киборг", "корсет", "ЗОВ", "гробик", "костер", "сектор"];
+var strings = ["кришна", "кришна", "харе", "харе",
+    "харе", "харе", "кришна", "кришна", "8-()"
+];
 //воз - зов
 //киборг - гробик
 //корсет - костер - сектор
@@ -16,5 +19,20 @@ function aclean(array) {
     }
     return array;
 }
+//Напишите функцию unique(arr), которая возвращает массив, содержащий только уникальные элементы arr
+function unique(arr) {
+    let objectTmp = {};
+    for (let i = 0; i < arr.length; i++) {
+        let word = arr[i].toLowerCase();
+        objectTmp[word] = arr[i];
+    }
+    arr.splice(0);
+
+    for (let key in objectTmp) {
+        arr.push(objectTmp[key]);
+    }
+    return arr;
+}
+console.log(unique(strings));
 console.log(arr);
 console.log(aclean(arr));

@@ -1,0 +1,20 @@
+//Напишите функцию aclean(arr), которая возвращает массив слов, очищенный от анаграмм.
+let arr = ["воз", "киборг", "корсет", "ЗОВ", "гробик", "костер", "сектор"];
+//воз - зов
+//киборг - гробик
+//корсет - костер - сектор
+
+function aclean(array) {
+    for (let i = 0; i < array.length; i++) {
+        let word = array[i].toLowerCase().split("").sort().join("");
+        console.log(word);
+        for (let j = i + 1; j < array.length; j++) {
+            if (word == array[j].toLowerCase().split("").sort().join("")) {
+                array.splice(j--, 1);
+            }
+        }
+    }
+    return array;
+}
+console.log(arr);
+console.log(aclean(arr));

@@ -1,1 +1,0 @@
-let atBe = "MotherFucking Boolshit";

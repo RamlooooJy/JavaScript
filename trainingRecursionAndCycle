@@ -1,0 +1,67 @@
+'use strict'
+
+let b = {
+    "misha": "3300",
+    "kosya": "300",
+    "olya": 9999,
+    "katya": "44400"
+}
+let k = {
+
+}
+
+
+
+let list = {
+    data: 12,
+    next: {
+        data: 24,
+        next: {
+            data: 36,
+            next: {
+                data: 48
+            }
+        }
+    }
+};
+//1 вывод списка через цикл
+function printList(lis) {
+    let p = [];
+    while (list.next != null) {
+        p.push(list.data);
+        list = list.next;
+    }
+    console.log(p);
+};
+//2 вывод списка рекурсивно 
+function printRec(lis) {
+    // лучше использовать временную переменную списка чтобы работать дальше со списком не составляло непредвиденных ошибок
+
+    //в пределах практики не использовал специально
+    if (lis.next != null) {
+        console.log(lis.data);
+        printRec(lis.next);
+    } else {
+
+    }
+};
+//3 вывод списка рекурсивно в обратном направлении
+function printRecList(lis) {
+    // лучше использовать временную переменную списка чтобы работать дальше со списком не составляло непредвиденных ошибок
+
+    //в пределах практики не использовал специально
+    if (lis.next != null) {
+        printRecList(lis.next);
+        console.log(lis.data);
+    }
+};
+//4 вывод в обратном направлении списка через цикл
+function getReverseList(lis) {
+    let p = [];
+    while (lis.next != null) {
+        p.unshift(lis.data);
+        lis = lis.next;
+    }
+    return p;
+}
+printRec(list);

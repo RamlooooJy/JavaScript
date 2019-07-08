@@ -33,6 +33,21 @@ function unique(arr) {
     }
     return arr;
 }
+//На входе массив чисел, например: arr = [1,2,3,4,5].
+//Напишите функцию getSums(arr), которая возвращает массив его частичных сумм.
+let getSums = (a) => {
+    let result = a.map((arg) => {
+        let sum = 0;
+        for (let j = 1; j <= arg; j++) {
+            sum += j;
+        }
+        return sum;
+
+    })
+    return result;
+};
+
+console.log(getSums(arrTe));
 console.log(unique(strings));
 console.log(arr);
 console.log(aclean(arr));

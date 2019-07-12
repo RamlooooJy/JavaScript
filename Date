@@ -1,0 +1,36 @@
+let date = new Date();
+// функция просмотра времени с
+function formatDate(date) {
+    //дни
+    let dd = date.getDate();
+    //месяцы+1 для форматирования
+    let mm = date.getMonth() + 1;
+    //годы
+    let yy = date.getFullYear() % 100;
+    //часы
+    let hours = date.getHours();
+    //минуты
+    let minutes = date.getMinutes();
+    //форматирование дней
+    if (dd < 10) dd = "0" + dd;
+    //форматирование месяцев
+    if (mm < 10) mm = "0" + mm;
+    //форматирование годов
+    if (yy < 10) yy = "0" + yy;
+    //форматирование часов
+    if (hours < 10) hours = "0" + hours;
+    //форматирование минут
+    if (minutes < 10) minutes = "0" + minutes;
+    //дата в момент вызова
+    let nowDate = new Date();
+    //проверка и забор данных
+    if (nowDate - date <= 1000) {
+        return "только что";
+    } else if (nowDate - date < 60000) {
+        return Math.floor((nowDate - date) / 1000) + " секунд назад";
+    } else if (nowDate - date < 1000 * 3600) {
+        return Math.floor((nowDate - date) / 1000 / 60) + " минут назад";
+    } else return dd + ":" + mm + ":" + yy + "  " + hours + ":" + minutes;
+}
+
+console.log(formatDate(new Date(new Date - 10000 * 60 * 1000)));

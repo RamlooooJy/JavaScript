@@ -50,3 +50,23 @@ users.sort(byField('age'));
 users.forEach(arg => {
     console.log(arg.age);
 })
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+let filter = function(arr, func) {
+    let result = [];
+    arr.forEach(arg => {
+        if (func(arg)) {
+            result.push(arg);
+        }
+    })
+    return result;
+}
+function getSomeOne(a, b) {  
+    return function(arg) {
+        for (let i = 0; i < arguments.length; i++) {
+            if (a == arg || b == arg) {
+                return true;
+            }
+        }
+    }
+}
+console.log(filter(arr, getSomeOne(1, 10)));

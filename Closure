@@ -60,12 +60,10 @@ let filter = function(arr, func) {
     })
     return result;
 }
-function getSomeOne(a, b) {  
+function getSomeOne(a, b) {
     return function(arg) {
-        for (let i = 0; i < arguments.length; i++) {
-            if (a == arg || b == arg) {
-                return true;
-            }
+        if (a == arg || b == arg) {
+            return true;
         }
     }
 }

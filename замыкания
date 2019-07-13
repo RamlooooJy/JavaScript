@@ -1,0 +1,27 @@
+//функция сортировки по любому полю объекта
+function byField(value) {
+    return function(a, b) {
+        return a[value] > b[value];
+    }
+}
+
+var users = [{
+    name: "Вася",
+    surname: 'Иванов',
+    age: 20
+}, {
+    name: "Петя",
+    surname: 'Чапаев',
+    age: 25
+}, {
+    name: "Маша",
+    surname: 'Медведева',
+    age: 18
+}];
+
+
+users.sort(byField('age'));
+
+users.forEach(arg => {
+    console.log(arg.age);
+})

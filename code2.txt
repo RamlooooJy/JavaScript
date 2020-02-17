@@ -1,0 +1,103 @@
+const text = document.querySelector('.text');
+const key = document.querySelector('.key');
+const alphabet = document.querySelector('.alphabet');
+const button = document.querySelector('.btn');
+//functional variables
+
+const table = document.querySelector('.table');
+//Valiables
+
+button.onclick = function(e){
+  e.preventDefault();
+  let div = document.querySelector('.boomer');
+  if(!!div){
+    div.classList.remove('boomer-anim');
+    div.addEventListener('transitionend',()=>{
+      //
+      div.innerHTML=`${text.innerHTML} <br> ${key.innerHTML}`;
+      //
+      div.classList.add('boomer-anim');
+    });
+    return;
+
+  }
+  div = document.createElement('div');
+  div.className = 'boomer';
+  //
+  div.innerHTML +=text.innerHTML +'<br>'+ key.innerHTML;
+  //
+  document.querySelector('.container').append(div);
+  setTimeout(()=>{
+  div.classList.add('boomer-anim');
+  },1);
+}
+//document functions
+
+
+
+
+//logic
+encrypt();
+function encrypt(){
+  let mes = text.innerHTML.split(' ').join('');
+  let k = key.innerHTML;
+  mes.__proto__.forEach = [].forEach;
+  const tr = document.createElement('tr');
+  let len = k.length;
+  let sorted;
+
+  sorted = k.split('').sort();
+
+let a=[];
+  for (let i = 0; i < Math.round(mes.length/len); i++) {
+    let b=[];
+    for(let j=0;j<len;j++){
+      b.push(mes[j+len*i]);
+    }
+    console.log(b);
+    a.push(b);
+  }
+
+  
+  console.log('unsorted key', k);
+  console.log('sorted key',sorted.join(''));
+  tmp = k;
+  let code = new Array(len);
+  for(let i=0;i<k.length;i++){
+    let pos = tmp.indexOf(sorted[i]) //в тпм букву из сорт
+    console.log(pos);
+    //tmp[pos]=-1;
+    tmp = tmp.split('');
+    console.log(tmp);
+    tmp[pos]='#';
+    tmp = tmp.join('');
+    let word ='';
+    for(let j =0; j< Math.round(mes.length/k.length);j++){
+      word+=a[j][pos];
+    }
+    code[i] = word.toLowerCase();
+
+
+  }
+
+console.log(code);
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

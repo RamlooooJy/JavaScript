@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body{
+
+        }
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+            letter-spacing: 1px;
+            font-family: Arial, Helvetica, sans-serif;
+            color: rgba(175, 175, 175, 0.98);
+
+        }
+        .suda{
+            padding: 25px;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(to left, rgb(0, 0, 0), rgba(33, 21, 45, 0.81));
+        }
+
+        td{
+            width: 20px;
+            border: 1px solid black;
+            text-align: center;
+            line-height: 16px;
+        }
+        .flex{
+            display: flex;
+        }
+        .key div{
+            padding:1px;
+        }
+        .alphabet{
+            margin-left: 22px;
+            text-align: center;
+            line-height: 16px;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="suda">
+
+    <div class="text">
+
+    </div>
+
+    <div class="key1">
+
+    </div>
+
+    <div contenteditable="true" class="alphabet">
+        <table>
+            <tr></tr>
+        </table>
+        <br>
+
+
+    </div>
+    <div class="flex">
+        <div class="key"></div>
+        <table class="table"></table>
+    </div>
+
+
+</div>
+<div id="here"></div>
+
+<script>
+    const wrap = document.querySelector('.suda');
+    let alphabet = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ .!?,0123456789';
+    const sentense = 'От заката до рассвета, Юра прыгал на пакете.!.';
+    const key = [22,11,33,14,31,12,1];
+    const table = document.querySelector('.table');
+    const prev = document.querySelector('.key');
+    const divKey = document.querySelector('.key1');
+    divKey.innerHTML = '';
+    divKey.innerHTML+=key+'<br>'+sentense;
+
+
+    let table2 =document.querySelector('.alphabet');
+    table2 = table2.querySelector('tr');
+    for(let i = 0; i<alphabet.length;i++){
+        let td = document.createElement('td');
+        td.innerHTML = alphabet[i];
+        table2.append(td);
+    }
+
+    let alph = [];
+    //shifr table
+    for(let i=0; i<key.length;i++){
+        let index = key[i];
+        let row =[];
+        for(let j=0; j<alphabet.length;j++){
+            if(index>=alphabet.length){
+                index=0;
+            }
+            row+=alphabet[index];
+            index++;
+        }
+        alph.push(row);
+    }
+
+    key.forEach(arg=>{
+        let div = document.createElement('div');
+        div.innerHTML=arg;
+        prev.append(div);
+    });
+
+    alph.forEach(arg=>{
+        let tr = document.createElement('tr');
+        for(let i=0; i<arg.length;i++){
+            let td = document.createElement('td');
+            td.innerHTML = arg[i];
+            tr.append(td);
+        }
+        table.append(tr);
+    });
+
+    //wrap.append(sentense);
+    wrap.append(document.createElement('br'));
+    //wrap.append(key);
+
+    //шифровка
+    let shifr='';
+    let keyInd = 0;
+    for(let i = 0; i<sentense.length;i++){
+        if(keyInd>=key.length) keyInd=0;
+        let arg = sentense[i];
+        let pos = alphabet.indexOf(arg.toUpperCase());
+        if(pos==-1){
+            shifr+=arg;
+        }else
+            shifr+=alph[keyInd][pos];
+        keyInd++;
+    }
+    let div = document.createElement('div');
+    div.innerHTML = '<b>Шифр:  </b>'+shifr;
+    wrap.append(div);
+    console.log(shifr);
+    //дешифровка
+    let desh='';
+    keyInd = 0;
+    for(let i = 0; i<shifr.length;i++){
+        if(keyInd>=key.length) keyInd=0;
+        let arg = shifr[i];
+        let pos = alph[keyInd].indexOf(arg);
+        if(pos==-1){
+            desh+=arg;
+        }
+        else
+            desh+=alphabet[pos];
+
+        keyInd++;
+    }
+
+    div = document.createElement('div');
+    div.innerHTML = '<b>Дешифровка:  </b>'+desh;
+    wrap.append(div);
+
+
+
+
+</script>
+</body>
+</html>

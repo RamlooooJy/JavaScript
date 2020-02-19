@@ -8,8 +8,21 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        body{
-
+        .btn{
+          background: white;
+          border: none;
+          padding: 15px;
+          border-radius: 25px;
+          text-transform: uppercase;
+          cursor: pointer;  
+          transition: .1s ease;
+        }
+        .btn:hover{
+          background: black;
+          color: whitesmoke;
+        }
+        .btn:active{
+          background: red;
         }
         *{
             box-sizing: border-box;
@@ -41,9 +54,10 @@
             padding:1px;
         }
         .alphabet{
-            margin-left: 22px;
-            text-align: center;
             line-height: 16px;
+        }
+        div{
+          margin-bottom: 10px;
         }
 
     </style>
@@ -53,55 +67,50 @@
 
 <div class="suda">
 
-    <div class="text">
+  <div contenteditable="true" class="alphabet">абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ .!?,0123456789</div>
 
-    </div>
+  <div contenteditable="true" class="text">От заката до рассвета, Юра прыгал на пакете.!.</div>
 
-    <div class="key1">
+  <div contenteditable="true" class="key">22,11,33,14,31,12,1</div>
 
-    </div>
-
-    <div contenteditable="true" class="alphabet">
-        <table>
-            <tr></tr>
-        </table>
-        <br>
+  <button class="btn">
+    tap for magic>>>
+  </button>
 
 
-    </div>
-    <div class="flex">
-        <div class="key"></div>
-        <table class="table"></table>
-    </div>
+  <div class="table-parse">
+      <table>
+          <tr></tr>
+      </table>
+      <br>
+  </div>
+    
 
+  <div class="here"></div>
 
 </div>
-<div id="here"></div>
 
 <script>
+
+  function magic (){
+
     const wrap = document.querySelector('.suda');
-    let alphabet = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ .!?,0123456789';
-    const sentense = 'От заката до рассвета, Юра прыгал на пакете.!.';
-    const key = [22,11,33,14,31,12,1];
-    const table = document.querySelector('.table');
-    const prev = document.querySelector('.key');
-    const divKey = document.querySelector('.key1');
-    divKey.innerHTML = '';
-    divKey.innerHTML+=key+'<br>'+sentense;
+    const alphabet = document.querySelector('.alphabet').innerHTML;
+    console.log("TCL: magic -> alphabet", alphabet.length)
+    const sentense = document.querySelector('.text').innerHTML;
+    const key = document.querySelector('.key').innerHTML.split(',');
+    const table = document.querySelector('.table-parse');
+    table.innerHTML ='<table><tr></tr></table>'
+    const outputContainer = document.querySelector('.here');
+    outputContainer.innerHTML = '';    
 
 
-    let table2 =document.querySelector('.alphabet');
-    table2 = table2.querySelector('tr');
-    for(let i = 0; i<alphabet.length;i++){
-        let td = document.createElement('td');
-        td.innerHTML = alphabet[i];
-        table2.append(td);
-    }
-
+    
     let alph = [];
     //shifr table
     for(let i=0; i<key.length;i++){
-        let index = key[i];
+        let index = key[i];     // key > 48 50 -48
+        if(index>alphabet.length) index-=alphabet.length;
         let row =[];
         for(let j=0; j<alphabet.length;j++){
             if(index>=alphabet.length){
@@ -113,11 +122,6 @@
         alph.push(row);
     }
 
-    key.forEach(arg=>{
-        let div = document.createElement('div');
-        div.innerHTML=arg;
-        prev.append(div);
-    });
 
     alph.forEach(arg=>{
         let tr = document.createElement('tr');
@@ -129,50 +133,65 @@
         table.append(tr);
     });
 
-    //wrap.append(sentense);
-    wrap.append(document.createElement('br'));
-    //wrap.append(key);
-
+    
     //шифровка
     let shifr='';
     let keyInd = 0;
     for(let i = 0; i<sentense.length;i++){
         if(keyInd>=key.length) keyInd=0;
         let arg = sentense[i];
-        let pos = alphabet.indexOf(arg.toUpperCase());
+
+        //let pos = alphabet.indexOf(arg.toUpperCase());
+        let pos = alphabet.indexOf(arg);
+        
         if(pos==-1){
             shifr+=arg;
         }else
-            shifr+=alph[keyInd][pos];
+        shifr+=alph[keyInd][pos];
+            //shifr+=alph[keyInd][pos].toLowerCase();
         keyInd++;
     }
     let div = document.createElement('div');
     div.innerHTML = '<b>Шифр:  </b>'+shifr;
-    wrap.append(div);
+    outputContainer.append(div);
     console.log(shifr);
+    
+    
     //дешифровка
     let desh='';
     keyInd = 0;
     for(let i = 0; i<shifr.length;i++){
         if(keyInd>=key.length) keyInd=0;
+        //let arg = shifr[i].toUpperCase();
         let arg = shifr[i];
         let pos = alph[keyInd].indexOf(arg);
         if(pos==-1){
-            desh+=arg;
+          desh+=arg;
+            //desh+=arg.toLowerCase();
         }
         else
             desh+=alphabet[pos];
+            //desh+=alphabet[pos].toLowerCase();
 
         keyInd++;
     }
 
     div = document.createElement('div');
     div.innerHTML = '<b>Дешифровка:  </b>'+desh;
-    wrap.append(div);
+    outputContainer.append(div);
 
-
-
+  } 
+  magic();
+    document.querySelector('.btn').onclick = magic;
 
 </script>
 </body>
 </html>
+
+
+<!-- 
+
+  1) Ввод алфавита, ключа, текста
+  2) Преобразование регистра недопустимо
+
+ -->

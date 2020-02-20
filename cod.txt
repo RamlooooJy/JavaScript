@@ -92,25 +92,26 @@
 
 <script>
 
-  function magic (){
+  magic(); 
+function magic (){
 
-    const wrap = document.querySelector('.suda');
+    //const wrap = document.querySelector('.suda');
     const alphabet = document.querySelector('.alphabet').innerHTML;
-    console.log("TCL: magic -> alphabet", alphabet.length)
     const sentense = document.querySelector('.text').innerHTML;
     const key = document.querySelector('.key').innerHTML.split(',');
     const table = document.querySelector('.table-parse');
-    table.innerHTML ='<table><tr></tr></table>'
+    table.innerHTML ='<table><tr></tr></table>';
     const outputContainer = document.querySelector('.here');
     outputContainer.innerHTML = '';    
-
-
+  
+    console.log(alphabet.length);
     
     let alph = [];
     //shifr table
+   //.......
     for(let i=0; i<key.length;i++){
         let index = key[i];     // key > 48 50 -48
-        if(index>alphabet.length) index-=alphabet.length;
+        if(index>alphabet.length) index%=alphabet.length;
         let row =[];
         for(let j=0; j<alphabet.length;j++){
             if(index>=alphabet.length){
@@ -135,12 +136,12 @@
 
     
     //шифровка
+   //.......
     let shifr='';
     let keyInd = 0;
     for(let i = 0; i<sentense.length;i++){
         if(keyInd>=key.length) keyInd=0;
         let arg = sentense[i];
-
         //let pos = alphabet.indexOf(arg.toUpperCase());
         let pos = alphabet.indexOf(arg);
         
@@ -154,7 +155,7 @@
     let div = document.createElement('div');
     div.innerHTML = '<b>Шифр:  </b>'+shifr;
     outputContainer.append(div);
-    console.log(shifr);
+    //console.log(shifr);
     
     
     //дешифровка
@@ -181,7 +182,7 @@
     outputContainer.append(div);
 
   } 
-  magic();
+  //magic();
     document.querySelector('.btn').onclick = magic;
 
 </script>
